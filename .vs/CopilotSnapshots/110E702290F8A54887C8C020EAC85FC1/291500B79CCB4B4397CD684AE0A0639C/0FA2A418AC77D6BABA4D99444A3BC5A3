@@ -1,0 +1,241 @@
+﻿namespace Responsi2
+{
+    using Configuration;
+    using Data;
+    using System;
+    using System.Windows.Forms;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// Form untuk setup/configure database connection
+    /// </summary>
+    public partial class DatabaseSetupForm : Form
+    {
+   private readonly DatabaseConfigHelper _configHelper;
+
+    public DatabaseSetupForm()
+        {
+    InitializeComponent();
+ _configHelper = new DatabaseConfigHelper();
+      LoadCurrentConfig();
+        }
+
+        private void LoadCurrentConfig()
+    {
+     var connectionString = _configHelper.GetConnectionString();
+          if (!string.IsNullOrEmpty(connectionString))
+    {
+     var (host, port, database, username) = _configHelper.ParseConnectionString(connectionString);
+       
+       txtHost.Text = host;
+    numPort.Value = port;
+       txtDatabase.Text = database;
+      txtUsername.Text = username;
+     }
+        }
+
+private async void btnTest_Click(object? sender, EventArgs e)
+      {
+   try
+           {
+    string host = txtHost.Text.Trim();
+     int port = (int)numPort.Value;
+   string database = txtDatabase.Text.Trim();
+        string username = txtUsername.Text.Trim();
+      string password = txtPassword.Text;
+
+      if (string.IsNullOrWhiteSpace(host) || string.IsNullOrWhiteSpace(database) || string.IsNullOrWhiteSpace(username))
+ {
+        MessageBox.Show("Semua field harus diisi!", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+          return;
+              }
+
+            string connectionString = $"Host={host};Port={port};Database={database};Username={username};Password={password}";
+
+      var dbConn = new DatabaseConnection(connectionString);
+         bool result = await dbConn.TestConnectionAsync();
+
+      if (result)
+   {
+        MessageBox.Show("Koneksi berhasil!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+    }
+   catch (Exception ex)
+      {
+     MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+       }
+  }
+
+        private void btnSave_Click(object? sender, EventArgs e)
+     {
+  try
+    {
+       string host = txtHost.Text.Trim();
+       int port = (int)numPort.Value;
+      string database = txtDatabase.Text.Trim();
+      string username = txtUsername.Text.Trim();
+ string password = txtPassword.Text;
+
+       if (string.IsNullOrWhiteSpace(host) || string.IsNullOrWhiteSpace(database) || string.IsNullOrWhiteSpace(username))
+ {
+     MessageBox.Show("Semua field harus diisi!", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+     return;
+      }
+
+      if (_configHelper.UpdateConnectionString(host, port, database, username, password))
+       {
+ MessageBox.Show("Konfigurasi berhasil disimpan! Silahkan restart aplikasi.", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    this.Close();
+           }
+      else
+     {
+  MessageBox.Show("Gagal menyimpan konfigurasi!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+ }
+            catch (Exception ex)
+   {
+      MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+     }
+        }
+
+       private void btnCancel_Click(object? sender, EventArgs e)
+        {
+          this.Close();
+        }
+
+       private void InitializeComponent()
+        {
+   Label lblHost = new Label();
+      Label lblPort = new Label();
+ Label lblDatabase = new Label();
+    Label lblUsername = new Label();
+  Label lblPassword = new Label();
+       
+   txtHost = new TextBox();
+ numPort = new NumericUpDown();
+   txtDatabase = new TextBox();
+      txtUsername = new TextBox();
+         txtPassword = new TextBox();
+      
+     btnTest = new Button();
+    btnSave = new Button();
+   btnCancel = new Button();
+         
+      Label lblTitle = new Label();
+
+    ((System.ComponentModel.ISupportInitialize)numPort).BeginInit();
+       SuspendLayout();
+
+  // lblTitle
+         lblTitle.AutoSize = true;
+      lblTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+         lblTitle.Location = new Point(20, 20);
+   lblTitle.Text = "Database Configuration";
+
+      // lblHost
+        lblHost.AutoSize = true;
+           lblHost.Location = new Point(20, 60);
+ lblHost.Text = "Host:";
+
+    // txtHost
+        txtHost.Location = new Point(120, 55);
+        txtHost.Size = new Size(250, 25);
+          txtHost.Text = "localhost";
+
+      // lblPort
+    lblPort.AutoSize = true;
+     lblPort.Location = new Point(20, 100);
+  lblPort.Text = "Port:";
+
+      // numPort
+    numPort.Location = new Point(120, 95);
+    numPort.Size = new Size(100, 25);
+    numPort.Value = 5432;
+      numPort.Maximum = 65535;
+
+     // lblDatabase
+       lblDatabase.AutoSize = true;
+     lblDatabase.Location = new Point(20, 140);
+        lblDatabase.Text = "Database:";
+
+  // txtDatabase
+  txtDatabase.Location = new Point(120, 135);
+ txtDatabase.Size = new Size(250, 25);
+        txtDatabase.Text = "prodev_db";
+
+  // lblUsername
+lblUsername.AutoSize = true;
+    lblUsername.Location = new Point(20, 180);
+       lblUsername.Text = "Username:";
+
+         // txtUsername
+     txtUsername.Location = new Point(120, 175);
+         txtUsername.Size = new Size(250, 25);
+ txtUsername.Text = "postgres";
+
+     // lblPassword
+      lblPassword.AutoSize = true;
+  lblPassword.Location = new Point(20, 220);
+       lblPassword.Text = "Password:";
+
+   // txtPassword
+      txtPassword.Location = new Point(120, 215);
+      txtPassword.Size = new Size(250, 25);
+  txtPassword.UseSystemPasswordChar = true;
+
+       // btnTest
+       btnTest.Location = new Point(120, 260);
+   btnTest.Size = new Size(75, 30);
+  btnTest.Text = "Test Connection";
+  btnTest.Click += btnTest_Click;
+
+  // btnSave
+     btnSave.Location = new Point(205, 260);
+       btnSave.Size = new Size(75, 30);
+   btnSave.Text = "Save";
+         btnSave.Click += btnSave_Click;
+
+   // btnCancel
+      btnCancel.Location = new Point(290, 260);
+        btnCancel.Size = new Size(75, 30);
+   btnCancel.Text = "Cancel";
+       btnCancel.Click += btnCancel_Click;
+
+    // Form
+  ClientSize = new Size(400, 320);
+   Controls.Add(lblTitle);
+       Controls.Add(lblHost);
+       Controls.Add(txtHost);
+   Controls.Add(lblPort);
+           Controls.Add(numPort);
+     Controls.Add(lblDatabase);
+     Controls.Add(txtDatabase);
+    Controls.Add(lblUsername);
+     Controls.Add(txtUsername);
+            Controls.Add(lblPassword);
+     Controls.Add(txtPassword);
+ Controls.Add(btnTest);
+       Controls.Add(btnSave);
+  Controls.Add(btnCancel);
+
+       Text = "Database Setup";
+      FormBorderStyle = FormBorderStyle.FixedDialog;
+    MaximizeBox = false;
+     MinimizeBox = false;
+     StartPosition = FormStartPosition.CenterScreen;
+
+    ((System.ComponentModel.ISupportInitialize)numPort).EndInit();
+    ResumeLayout(false);
+       PerformLayout();
+      }
+
+     private TextBox txtHost = null!;
+    private NumericUpDown numPort = null!;
+ private TextBox txtDatabase = null!;
+     private TextBox txtUsername = null!;
+        private TextBox txtPassword = null!;
+  private Button btnTest = null!;
+     private Button btnSave = null!;
+     private Button btnCancel = null!;
+    }
+}

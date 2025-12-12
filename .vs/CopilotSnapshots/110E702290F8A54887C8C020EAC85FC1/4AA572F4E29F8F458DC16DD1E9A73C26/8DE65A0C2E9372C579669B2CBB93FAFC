@@ -1,0 +1,216 @@
+﻿namespace Responsi2.Services
+{
+    using Models;
+    using Data;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// Service class untuk menangani business logic
+    /// Menggunakan repository pattern untuk database operations
+    /// </summary>
+    public class DeveloperService
+ {
+    private readonly DeveloperRepository _developerRepository;
+     private readonly PerformanceRepository _performanceRepository;
+
+        public DeveloperService(DeveloperRepository developerRepository, PerformanceRepository performanceRepository)
+        {
+     _developerRepository = developerRepository ?? throw new ArgumentNullException(nameof(developerRepository));
+      _performanceRepository = performanceRepository ?? throw new ArgumentNullException(nameof(performanceRepository));
+        }
+
+        /// <summary>
+        /// Menambah developer baru
+        /// </summary>
+        public async Task<bool> AddDeveloperAsync(string name, string project, string contractStatus)
+      {
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(project) || string.IsNullOrWhiteSpace(contractStatus))
+            {
+      return false;
+    }
+
+    try
+   {
+int result = await _developerRepository.AddDeveloperAsync(name, project, contractStatus);
+  return result > 0;
+     }
+   catch
+  {
+     return false;
+}
+        }
+
+        /// <summary>
+        /// Update informasi developer
+        /// </summary>
+        public async Task<bool> UpdateDeveloperAsync(int id, string name, string project, string contractStatus)
+    {
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(project) || string.IsNullOrWhiteSpace(contractStatus))
+ {
+             return false;
+}
+
+        try
+            {
+return await _developerRepository.UpdateDeveloperAsync(id, name, project, contractStatus);
+      }
+            catch
+  {
+   return false;
+    }
+        }
+
+        /// <summary>
+     /// Hapus developer dari daftar
+        /// </summary>
+        public async Task<bool> DeleteDeveloperAsync(int id)
+        {
+   try
+        {
+     // Hapus performance data yang terkait terlebih dahulu
+    await _performanceRepository.DeletePerformancesByDeveloperIdAsync(id);
+       
+                // Kemudian hapus developer
+         return await _developerRepository.DeleteDeveloperAsync(id);
+       }
+         catch
+       {
+       return false;
+}
+        }
+
+        /// <summary>
+        /// Dapatkan semua developer
+        /// </summary>
+        public async Task<List<Developer>> GetAllDevelopersAsync()
+        {
+            try
+    {
+  var data = await _developerRepository.GetAllDevelopersAsync();
+     return data.Select(d => new Developer
+        {
+       Id = d.Id,
+    Name = d.Name,
+    Project = d.Project,
+          ContractStatus = d.ContractStatus
+        }).ToList();
+    }
+  catch
+            {
+  return new List<Developer>();
+ }
+        }
+
+        /// <summary>
+  /// Dapatkan developer berdasarkan ID
+        /// </summary>
+        public async Task<Developer?> GetDeveloperByIdAsync(int id)
+     {
+     try
+          {
+           var data = await _developerRepository.GetDeveloperByIdAsync(id);
+         if (data.HasValue)
+        {
+          return new Developer
+            {
+             Id = data.Value.Id,
+            Name = data.Value.Name,
+ Project = data.Value.Project,
+      ContractStatus = data.Value.ContractStatus
+   };
+        }
+     return null;
+        }
+         catch
+            {
+          return null;
+        }
+        }
+
+ /// <summary>
+        /// Tambah performance data
+        /// </summary>
+        public async Task<bool> AddPerformanceAsync(int developerId, int completedFeatures, int bugCount)
+        {
+     try
+            {
+             if (!await _developerRepository.DeveloperExistsAsync(developerId))
+      return false;
+
+    int result = await _performanceRepository.AddPerformanceAsync(developerId, completedFeatures, bugCount);
+             return result > 0;
+       }
+       catch
+          {
+        return false;
+    }
+    }
+
+  /// <summary>
+        /// Update performance data
+        /// </summary>
+        public async Task<bool> UpdatePerformanceAsync(int id, int completedFeatures, int bugCount)
+    {
+  try
+   {
+     return await _performanceRepository.UpdatePerformanceAsync(id, completedFeatures, bugCount);
+    }
+ catch
+            {
+        return false;
+    }
+        }
+
+        /// <summary>
+        /// Dapatkan semua performance data
+      /// </summary>
+        public async Task<List<Performance>> GetAllPerformancesAsync()
+        {
+            try
+       {
+             var data = await _performanceRepository.GetAllPerformancesAsync();
+    return data.Select(p => new Performance
+                {
+   Id = p.Id,
+     DeveloperId = p.DeveloperId,
+        CompletedFeatures = p.CompletedFeatures,
+ BugCount = p.BugCount,
+        PerformanceScore = p.PerformanceScore
+  }).ToList();
+       }
+         catch
+            {
+    return new List<Performance>();
+      }
+        }
+
+   /// <summary>
+        /// Dapatkan performance data untuk developer tertentu
+        /// </summary>
+        public async Task<Performance?> GetPerformanceByDeveloperIdAsync(int developerId)
+        {
+try
+            {
+       var data = await _performanceRepository.GetPerformanceByDeveloperIdAsync(developerId);
+     if (data.HasValue)
+              {
+ return new Performance
+    {
+     Id = data.Value.Id,
+              DeveloperId = data.Value.DeveloperId,
+       CompletedFeatures = data.Value.CompletedFeatures,
+     BugCount = data.Value.BugCount,
+       PerformanceScore = data.Value.PerformanceScore
+              };
+             }
+      return null;
+            }
+       catch
+            {
+         return null;
+  }
+        }
+    }
+}

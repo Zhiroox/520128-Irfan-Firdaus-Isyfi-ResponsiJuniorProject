@@ -1,0 +1,61 @@
+﻿namespace Responsi2.Models
+{
+    /// <summary>
+    /// Model class untuk Performance/Kinerja Developer
+    /// Mengimplementasikan Encapsulation dengan private fields dan public properties
+    /// Mewarisi dari BaseEntity (Inheritance)
+    /// </summary>
+  public class Performance : BaseEntity
+    {
+  // Private fields
+  private int _developerId;
+        private int _completedFeatures;
+   private int _bugCount;
+        private double _performanceScore;
+
+ // Public properties dengan encapsulation
+        public int DeveloperId
+  {
+  get { return _developerId; }
+   set { _developerId = value; }
+        }
+
+    public int CompletedFeatures
+        {
+    get { return _completedFeatures; }
+            set { _completedFeatures = value >= 0 ? value : 0; }
+    }
+
+        public int BugCount
+    {
+       get { return _bugCount; }
+            set { _bugCount = value >= 0 ? value : 0; }
+        }
+
+   public double PerformanceScore
+        {
+      get { return _performanceScore; }
+            set { _performanceScore = value >= 0 && value <= 100 ? value : 0; }
+        }
+
+     // Calculated property
+        public double GetQualityScore()
+      {
+    if (_completedFeatures == 0) return 0;
+ return 100 - ((_bugCount / (double)_completedFeatures) * 100);
+        }
+
+   public string GetPerformanceRating()
+        {
+            if (_performanceScore >= 85) return "Excellent";
+            if (_performanceScore >= 70) return "Good";
+    if (_performanceScore >= 55) return "Average";
+     return "Needs Improvement";
+   }
+
+     public override string ToString()
+        {
+         return $"Developer {DeveloperId}: {CompletedFeatures} fitur, {BugCount} bug - Rating: {GetPerformanceRating()}";
+        }
+    }
+}

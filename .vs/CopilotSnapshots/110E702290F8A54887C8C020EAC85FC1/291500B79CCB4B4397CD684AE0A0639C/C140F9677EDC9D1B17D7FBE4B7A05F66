@@ -1,0 +1,124 @@
+﻿# 🚀 QUICK START - PostgreSQL Connection Setup
+
+## ⚡ Langkah Cepat (3 Menit)
+
+### Step 1: Buat Database di PostgreSQL
+```sql
+CREATE DATABASE prodev_db;
+```
+
+### Step 2: Jalankan SQL Script
+Copy-paste isi dari `Database\schema.sql` ke pgAdmin Query Tool dan execute.
+
+Atau via command line:
+```bash
+psql -U postgres -d prodev_db -f schema.sql
+```
+
+### Step 3: Update Connection String
+Edit file `appsettings.json`:
+
+```json
+{
+  "ConnectionStrings": {
+  "DefaultConnection": "Host=localhost;Port=5432;Database=prodev_db;Username=postgres;Password=YOUR_PASSWORD_HERE"
+  }
+}
+```
+
+**Ganti `YOUR_PASSWORD_HERE` dengan password PostgreSQL kamu**
+
+---
+
+## 📋 Default Values
+
+Jika menggunakan instalasi PostgreSQL default:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Port=5432;Database=prodev_db;Username=postgres;Password=postgres"
+  }
+}
+```
+
+---
+
+## 🔑 Connection String Components
+
+| Part | Default | Contoh |
+|------|---------|--------|
+| Host | localhost | 192.168.1.100 |
+| Port | 5432 | 5432 |
+| Database | prodev_db | my_database |
+| Username | postgres | admin |
+| Password | - | your_secret_pass |
+
+---
+
+## ✅ Verify Connection
+
+Aplikasi akan otomatis test connection saat startup:
+- ✅ Muncul dialog "Koneksi database berhasil!" = Success
+- ❌ Muncul error = Check konfigurasi
+
+---
+
+## 🆘 Troubleshooting
+
+### ❓ "Gagal terhubung ke database"
+- [ ] PostgreSQL server berjalan? (Services → PostgreSQL)
+- [ ] Password benar di appsettings.json?
+- [ ] Database `prodev_db` sudah created?
+- [ ] Port 5432 tidak diblokir firewall?
+
+### ❓ "relation 'developers' does not exist"
+- [ ] SQL script sudah di-execute?
+- [ ] Tabel dibuat di database yang benar?
+
+### ❓ "password authentication failed"
+- [ ] Cek password di appsettings.json
+- [ ] Pastikan tidak ada space atau typo
+
+---
+
+## 📝 File-File Penting
+
+| File | Fungsi |
+|------|--------|
+| `appsettings.json` | Connection string configuration |
+| `Database/schema.sql` | Database schema & tables |
+| `Data/DatabaseConnection.cs` | Connection manager |
+| `Data/DeveloperRepository.cs` | Developer CRUD operations |
+| `Data/PerformanceRepository.cs` | Performance CRUD operations |
+| `Configuration/DatabaseConfigHelper.cs` | Config helper |
+
+---
+
+## 🎯 Setelah Setup
+
+Application siap digunakan:
+```
+✅ Form otomatis connect ke database saat startup
+✅ Insert/Update/Delete langsung tersimpan di database
+✅ Data persist setelah close aplikasi
+✅ Performance data otomatis dihitung
+```
+
+---
+
+## 💾 Database Backup
+
+### Export Database
+```bash
+pg_dump -U postgres prodev_db > backup.sql
+```
+
+### Restore Database
+```bash
+psql -U postgres -d prodev_db < backup.sql
+```
+
+---
+
+**Ada pertanyaan? Cek `DATABASE_SETUP.md` untuk dokumentasi lengkap! 📖**

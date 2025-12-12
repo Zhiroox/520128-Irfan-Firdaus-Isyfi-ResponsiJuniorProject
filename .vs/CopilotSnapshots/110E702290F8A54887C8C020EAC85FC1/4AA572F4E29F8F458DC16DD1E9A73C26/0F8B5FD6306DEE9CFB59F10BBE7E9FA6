@@ -1,0 +1,54 @@
+﻿-- ===================================
+-- PRODEV Database Schema
+-- PostgreSQL
+-- ===================================
+
+-- Drop existing tables if they exist
+DROP TABLE IF EXISTS performances;
+DROP TABLE IF EXISTS developers;
+
+-- ===================================
+-- Create Developers Table
+-- ===================================
+CREATE TABLE developers (
+    id SERIAL PRIMARY KEY,
+name VARCHAR(255) NOT NULL,
+    project VARCHAR(255) NOT NULL,
+    contract_status VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create index untuk faster queries
+CREATE INDEX idx_developers_name ON developers(name);
+CREATE INDEX idx_developers_project ON developers(project);
+
+-- ===================================
+-- Create Performances Table
+-- ===================================
+CREATE TABLE performances (
+    id SERIAL PRIMARY KEY,
+    developer_id INT NOT NULL,
+    completed_features INT NOT NULL DEFAULT 0,
+    bug_count INT NOT NULL DEFAULT 0,
+    performance_score DOUBLE PRECISION NOT NULL DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (developer_id) REFERENCES developers(id) ON DELETE CASCADE
+);
+
+-- Create index untuk faster queries
+CREATE INDEX idx_performances_developer_id ON performances(developer_id);
+
+-- ===================================
+-- Sample Data (Optional)
+-- ===================================
+-- INSERT INTO developers (name, project, contract_status) VALUES
+-- ('Adi Pratama', 'Project A', 'Full-time'),
+-- ('Budi Santoso', 'Project B', 'Part-time'),
+-- ('Citra Dewi', 'Project C', 'Contract');
+
+-- INSERT INTO performances (developer_id, completed_features, bug_count, performance_score) VALUES
+-- (1, 10, 2, 80),
+-- (2, 8, 3, 62.5),
+-- (3, 15, 1, 93.33);

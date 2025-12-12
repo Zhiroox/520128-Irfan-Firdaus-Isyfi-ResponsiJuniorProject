@@ -1,0 +1,504 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\junpro\\responsi\\Responsi2\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|c:\\junpro\\responsi\\responsi2\\data\\developerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|solutionrelative:data\\developerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|c:\\junpro\\responsi\\responsi2\\data\\proyekrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|solutionrelative:data\\proyekrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|c:\\junpro\\responsi\\responsi2\\models\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|solutionrelative:models\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|c:\\junpro\\responsi\\responsi2\\models\\developer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|solutionrelative:models\\developer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|c:\\junpro\\responsi\\responsi2\\models\\proyek.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|solutionrelative:models\\proyek.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|c:\\junpro\\responsi\\responsi2\\services\\developerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|solutionrelative:services\\developerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|c:\\junpro\\responsi\\responsi2\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|c:\\junpro\\responsi\\responsi2\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|solutionrelative:form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|c:\\junpro\\responsi\\responsi2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|c:\\junpro\\responsi\\responsi2\\form1.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
+      "RelativeMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|solutionrelative:form1.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|c:\\junpro\\responsi\\responsi2\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|c:\\junpro\\responsi\\responsi2\\responsi2.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|solutionrelative:responsi2.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|c:\\junpro\\responsi\\responsi2\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\appsettings.example.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\DatabaseSetupForm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-1757380365\\DatabaseConfigHelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-1076289289\\DatabaseConnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\RUN_APP.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\DEBUGGING.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\INFO.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\1301510567\\Performance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-1076289289\\PerformanceRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|c:\\junpro\\responsi\\responsi2\\database\\schema.sql||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{681E5D6C-527F-47D2-A8CF-9977E50AA541}|Responsi2.csproj|solutionrelative:database\\schema.sql||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\QUICKSTART.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\DATABASE_SETUP.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\SETUP_CHECKLIST.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\PROJECT_DOCUMENTATION.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\INTEGRATION_COMPLETE.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 19,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "README.md",
+              "DocumentMoniker": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\README.md",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\README.md",
+              "ToolTip": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\README.md",
+              "RelativeToolTip": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\README.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-12-12T04:12:38.793Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "INTEGRATION_COMPLETE.md",
+              "DocumentMoniker": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\INTEGRATION_COMPLETE.md",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\INTEGRATION_COMPLETE.md",
+              "ToolTip": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\INTEGRATION_COMPLETE.md",
+              "RelativeToolTip": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\INTEGRATION_COMPLETE.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-12-12T04:12:38.768Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "PROJECT_DOCUMENTATION.md",
+              "DocumentMoniker": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\PROJECT_DOCUMENTATION.md",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\PROJECT_DOCUMENTATION.md",
+              "ToolTip": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\PROJECT_DOCUMENTATION.md",
+              "RelativeToolTip": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\PROJECT_DOCUMENTATION.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-12-12T04:12:38.742Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "SETUP_CHECKLIST.md",
+              "DocumentMoniker": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\SETUP_CHECKLIST.md",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\SETUP_CHECKLIST.md",
+              "ToolTip": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\SETUP_CHECKLIST.md",
+              "RelativeToolTip": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\SETUP_CHECKLIST.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-12-12T04:12:38.715Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "DATABASE_SETUP.md",
+              "DocumentMoniker": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\DATABASE_SETUP.md",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\DATABASE_SETUP.md",
+              "ToolTip": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\DATABASE_SETUP.md",
+              "RelativeToolTip": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\DATABASE_SETUP.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-12-12T04:12:38.685Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "QUICKSTART.md",
+              "DocumentMoniker": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\QUICKSTART.md",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\QUICKSTART.md",
+              "ToolTip": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\QUICKSTART.md",
+              "RelativeToolTip": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\QUICKSTART.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-12-12T04:12:38.656Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "schema.sql",
+              "DocumentMoniker": "C:\\junpro\\responsi\\Responsi2\\Database\\schema.sql",
+              "RelativeDocumentMoniker": "Database\\schema.sql",
+              "ToolTip": "C:\\junpro\\responsi\\Responsi2\\Database\\schema.sql",
+              "RelativeToolTip": "Database\\schema.sql",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-12-12T04:12:38.617Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "PerformanceRepository.cs",
+              "DocumentMoniker": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-1076289289\\PerformanceRepository.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-1076289289\\PerformanceRepository.cs",
+              "ToolTip": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-1076289289\\PerformanceRepository.cs",
+              "RelativeToolTip": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-1076289289\\PerformanceRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T04:12:38.512Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Performance.cs",
+              "DocumentMoniker": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\1301510567\\Performance.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\1301510567\\Performance.cs",
+              "ToolTip": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\1301510567\\Performance.cs",
+              "RelativeToolTip": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\1301510567\\Performance.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T04:12:38.467Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Form1.resx",
+              "DocumentMoniker": "C:\\junpro\\responsi\\Responsi2\\Form1.resx",
+              "RelativeDocumentMoniker": "Form1.resx",
+              "ToolTip": "C:\\junpro\\responsi\\Responsi2\\Form1.resx",
+              "RelativeToolTip": "Form1.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-12-12T04:04:02.798Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "INFO.md",
+              "DocumentMoniker": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\INFO.md",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\INFO.md",
+              "ToolTip": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\INFO.md",
+              "RelativeToolTip": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\INFO.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-12-12T04:01:22.812Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ProyekRepository.cs",
+              "DocumentMoniker": "C:\\junpro\\responsi\\Responsi2\\Data\\ProyekRepository.cs",
+              "RelativeDocumentMoniker": "Data\\ProyekRepository.cs",
+              "ToolTip": "C:\\junpro\\responsi\\Responsi2\\Data\\ProyekRepository.cs",
+              "RelativeToolTip": "Data\\ProyekRepository.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAwwPYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T03:39:33.605Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "C:\\junpro\\responsi\\Responsi2\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "C:\\junpro\\responsi\\Responsi2\\Form1.cs [Design]",
+              "RelativeToolTip": "Form1.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T02:49:46.543Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\junpro\\responsi\\Responsi2\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\junpro\\responsi\\Responsi2\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-12-12T03:17:38.383Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DeveloperService.cs",
+              "DocumentMoniker": "C:\\junpro\\responsi\\Responsi2\\Services\\DeveloperService.cs",
+              "RelativeDocumentMoniker": "Services\\DeveloperService.cs",
+              "ToolTip": "C:\\junpro\\responsi\\Responsi2\\Services\\DeveloperService.cs",
+              "RelativeToolTip": "Services\\DeveloperService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T03:06:15.846Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Developer.cs",
+              "DocumentMoniker": "C:\\junpro\\responsi\\Responsi2\\Models\\Developer.cs",
+              "RelativeDocumentMoniker": "Models\\Developer.cs",
+              "ToolTip": "C:\\junpro\\responsi\\Responsi2\\Models\\Developer.cs",
+              "RelativeToolTip": "Models\\Developer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAMAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T03:06:04.376Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Form1.Designer.cs",
+              "DocumentMoniker": "C:\\junpro\\responsi\\Responsi2\\Form1.Designer.cs",
+              "RelativeDocumentMoniker": "Form1.Designer.cs",
+              "ToolTip": "C:\\junpro\\responsi\\Responsi2\\Form1.Designer.cs",
+              "RelativeToolTip": "Form1.Designer.cs",
+              "ViewState": "AgIAAFwAAAAAAAAAAAD4v5AAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T02:48:10.548Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Proyek.cs",
+              "DocumentMoniker": "C:\\junpro\\responsi\\Responsi2\\Models\\Proyek.cs",
+              "RelativeDocumentMoniker": "Models\\Proyek.cs",
+              "ToolTip": "C:\\junpro\\responsi\\Responsi2\\Models\\Proyek.cs",
+              "RelativeToolTip": "Models\\Proyek.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAC8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T03:38:59.023Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BaseEntity.cs",
+              "DocumentMoniker": "C:\\junpro\\responsi\\Responsi2\\Models\\BaseEntity.cs",
+              "RelativeDocumentMoniker": "Models\\BaseEntity.cs",
+              "ToolTip": "C:\\junpro\\responsi\\Responsi2\\Models\\BaseEntity.cs",
+              "RelativeToolTip": "Models\\BaseEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAMAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T03:06:00.641Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DeveloperRepository.cs",
+              "DocumentMoniker": "C:\\junpro\\responsi\\Responsi2\\Data\\DeveloperRepository.cs",
+              "RelativeDocumentMoniker": "Data\\DeveloperRepository.cs",
+              "ToolTip": "C:\\junpro\\responsi\\Responsi2\\Data\\DeveloperRepository.cs",
+              "RelativeToolTip": "Data\\DeveloperRepository.cs",
+              "ViewState": "AgIAANoAAAAAAAAAAAAlwCsBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T03:17:59.316Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\junpro\\responsi\\Responsi2\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\junpro\\responsi\\Responsi2\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAIAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T03:54:33.897Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "DatabaseConnection.cs",
+              "DocumentMoniker": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-1076289289\\DatabaseConnection.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-1076289289\\DatabaseConnection.cs",
+              "ToolTip": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-1076289289\\DatabaseConnection.cs",
+              "RelativeToolTip": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-1076289289\\DatabaseConnection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T04:01:09.32Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "RUN_APP.md",
+              "DocumentMoniker": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\RUN_APP.md",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\RUN_APP.md",
+              "ToolTip": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\RUN_APP.md",
+              "RelativeToolTip": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\RUN_APP.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-12-12T04:01:13.4Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "DEBUGGING.md",
+              "DocumentMoniker": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\DEBUGGING.md",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\DEBUGGING.md",
+              "ToolTip": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\DEBUGGING.md",
+              "RelativeToolTip": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\DEBUGGING.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-12-12T04:01:18.931Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "appsettings.example.json",
+              "DocumentMoniker": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\appsettings.example.json",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\appsettings.example.json",
+              "ToolTip": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\appsettings.example.json",
+              "RelativeToolTip": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\appsettings.example.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-12-12T03:27:57.368Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Responsi2",
+              "DocumentMoniker": "C:\\junpro\\responsi\\Responsi2\\Responsi2.csproj",
+              "RelativeDocumentMoniker": "Responsi2.csproj",
+              "ToolTip": "C:\\junpro\\responsi\\Responsi2\\Responsi2.csproj",
+              "RelativeToolTip": "Responsi2.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-12-12T03:33:01.669Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "DatabaseSetupForm.cs",
+              "DocumentMoniker": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\DatabaseSetupForm.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\DatabaseSetupForm.cs",
+              "ToolTip": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\DatabaseSetupForm.cs",
+              "RelativeToolTip": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-948032021\\DatabaseSetupForm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T03:28:04.305Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "DatabaseConfigHelper.cs",
+              "DocumentMoniker": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-1757380365\\DatabaseConfigHelper.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-1757380365\\DatabaseConfigHelper.cs",
+              "ToolTip": "C:\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-1757380365\\DatabaseConfigHelper.cs",
+              "RelativeToolTip": "..\\..\\..\\Users\\irfan\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-1757380365\\DatabaseConfigHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T03:28:07.648Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\junpro\\responsi\\Responsi2\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "C:\\junpro\\responsi\\Responsi2\\Form1.cs",
+              "RelativeToolTip": "Form1.cs",
+              "ViewState": "AgIAAGABAAAAAAAAAAAtwHQBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T02:47:43.804Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

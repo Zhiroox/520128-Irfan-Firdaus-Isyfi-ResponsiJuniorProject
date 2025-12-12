@@ -1,0 +1,220 @@
+﻿namespace Responsi2.Data
+{
+    using Npgsql;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    /// <summary>
+ /// Repository untuk Performance - menangani semua database operations
+    /// </summary>
+    public class PerformanceRepository
+    {
+        private readonly DatabaseConnection _dbConnection;
+
+        public PerformanceRepository(DatabaseConnection dbConnection)
+     {
+     _dbConnection = dbConnection ?? throw new ArgumentNullException(nameof(dbConnection));
+        }
+
+        /// <summary>
+        /// Tambah performance data baru ke database
+        /// </summary>
+        public async Task<int> AddPerformanceAsync(int developerId, int completedFeatures, int bugCount)
+        {
+          try
+            {
+         // Hitung performance score (Quality Score)
+         double qualityScore = completedFeatures > 0 ? 100 - ((bugCount / (double)completedFeatures) * 100) : 0;
+
+    string query = @"
+                  INSERT INTO performances (developer_id, completed_features, bug_count, performance_score, created_at, updated_at)
+   VALUES (@developerId, @completedFeatures, @bugCount, @performanceScore, @createdAt, @updatedAt)
+   RETURNING id;
+  ";
+
+        var parameters = new[]
+                {
+      new NpgsqlParameter("@developerId", developerId),
+     new NpgsqlParameter("@completedFeatures", completedFeatures),
+       new NpgsqlParameter("@bugCount", bugCount),
+ new NpgsqlParameter("@performanceScore", qualityScore),
+     new NpgsqlParameter("@createdAt", DateTime.Now),
+               new NpgsqlParameter("@updatedAt", DateTime.Now)
+   };
+
+  var result = await _dbConnection.ExecuteScalarAsync(query, parameters);
+      return result != null ? Convert.ToInt32(result) : 0;
+            }
+       catch (Exception ex)
+   {
+           throw new InvalidOperationException($"Error adding performance: {ex.Message}", ex);
+    }
+        }
+
+        /// <summary>
+        /// Update performance data
+  /// </summary>
+        public async Task<bool> UpdatePerformanceAsync(int id, int completedFeatures, int bugCount)
+        {
+     try
+            {
+     // Hitung performance score (Quality Score)
+       double qualityScore = completedFeatures > 0 ? 100 - ((bugCount / (double)completedFeatures) * 100) : 0;
+
+       string query = @"
+        UPDATE performances
+  SET completed_features = @completedFeatures, 
+        bug_count = @bugCount,
+         performance_score = @performanceScore,
+        updated_at = @updatedAt
+             WHERE id = @id;
+              ";
+
+   var parameters = new[]
+      {
+     new NpgsqlParameter("@id", id),
+              new NpgsqlParameter("@completedFeatures", completedFeatures),
+             new NpgsqlParameter("@bugCount", bugCount),
+      new NpgsqlParameter("@performanceScore", qualityScore),
+    new NpgsqlParameter("@updatedAt", DateTime.Now)
+    };
+
+    int result = await _dbConnection.ExecuteAsync(query, parameters);
+      return result > 0;
+            }
+ catch (Exception ex)
+      {
+      throw new InvalidOperationException($"Error updating performance: {ex.Message}", ex);
+  }
+        }
+
+        /// <summary>
+  /// Hapus performance data
+        /// </summary>
+  public async Task<bool> DeletePerformanceAsync(int id)
+        {
+try
+         {
+      string query = "DELETE FROM performances WHERE id = @id;";
+    var parameters = new[] { new NpgsqlParameter("@id", id) };
+
+      int result = await _dbConnection.ExecuteAsync(query, parameters);
+     return result > 0;
+            }
+      catch (Exception ex)
+          {
+              throw new InvalidOperationException($"Error deleting performance: {ex.Message}", ex);
+        }
+    }
+
+        /// <summary>
+        /// Dapatkan semua performance data dari database
+        /// </summary>
+        public async Task<List<(int Id, int DeveloperId, int CompletedFeatures, int BugCount, double PerformanceScore)>> GetAllPerformancesAsync()
+        {
+            var performances = new List<(int Id, int DeveloperId, int CompletedFeatures, int BugCount, double PerformanceScore)>();
+
+     try
+     {
+    string query = "SELECT id, developer_id, completed_features, bug_count, performance_score FROM performances ORDER BY id;";
+
+      using var reader = await _dbConnection.ExecuteReaderAsync(query);
+          while (await reader.NextResultAsync())
+      {
+     int id = reader.GetInt32(0);
+           int developerId = reader.GetInt32(1);
+           int completedFeatures = reader.GetInt32(2);
+ int bugCount = reader.GetInt32(3);
+    double performanceScore = reader.GetDouble(4);
+
+       performances.Add((id, developerId, completedFeatures, bugCount, performanceScore));
+    }
+    }
+   catch (Exception ex)
+     {
+    throw new InvalidOperationException($"Error retrieving performances: {ex.Message}", ex);
+   }
+
+            return performances;
+        }
+
+        /// <summary>
+        /// Dapatkan performance data berdasarkan ID
+        /// </summary>
+        public async Task<(int Id, int DeveloperId, int CompletedFeatures, int BugCount, double PerformanceScore)?> GetPerformanceByIdAsync(int id)
+        {
+          try
+            {
+              string query = "SELECT id, developer_id, completed_features, bug_count, performance_score FROM performances WHERE id = @id;";
+                var parameters = new[] { new NpgsqlParameter("@id", id) };
+
+          using var reader = await _dbConnection.ExecuteReaderAsync(query, parameters);
+                if (await reader.NextResultAsync())
+                {
+   int perfId = reader.GetInt32(0);
+  int developerId = reader.GetInt32(1);
+   int completedFeatures = reader.GetInt32(2);
+      int bugCount = reader.GetInt32(3);
+    double performanceScore = reader.GetDouble(4);
+
+            return (perfId, developerId, completedFeatures, bugCount, performanceScore);
+ }
+    }
+            catch (Exception ex)
+            {
+      throw new InvalidOperationException($"Error retrieving performance: {ex.Message}", ex);
+            }
+
+        return null;
+        }
+
+        /// <summary>
+ /// Dapatkan performance data untuk developer tertentu
+        /// </summary>
+        public async Task<(int Id, int DeveloperId, int CompletedFeatures, int BugCount, double PerformanceScore)?> GetPerformanceByDeveloperIdAsync(int developerId)
+        {
+            try
+    {
+string query = "SELECT id, developer_id, completed_features, bug_count, performance_score FROM performances WHERE developer_id = @developerId;";
+       var parameters = new[] { new NpgsqlParameter("@developerId", developerId) };
+
+         using var reader = await _dbConnection.ExecuteReaderAsync(query, parameters);
+     if (await reader.NextResultAsync())
+        {
+              int id = reader.GetInt32(0);
+         int devId = reader.GetInt32(1);
+            int completedFeatures = reader.GetInt32(2);
+        int bugCount = reader.GetInt32(3);
+                 double performanceScore = reader.GetDouble(4);
+
+        return (id, devId, completedFeatures, bugCount, performanceScore);
+  }
+            }
+            catch (Exception ex)
+     {
+      throw new InvalidOperationException($"Error retrieving performance by developer: {ex.Message}", ex);
+          }
+
+    return null;
+        }
+
+        /// <summary>
+        /// Hapus semua performance data untuk developer tertentu
+      /// </summary>
+        public async Task<int> DeletePerformancesByDeveloperIdAsync(int developerId)
+        {
+            try
+       {
+  string query = "DELETE FROM performances WHERE developer_id = @developerId;";
+                var parameters = new[] { new NpgsqlParameter("@developerId", developerId) };
+
+       return await _dbConnection.ExecuteAsync(query, parameters);
+     }
+      catch (Exception ex)
+         {
+           throw new InvalidOperationException($"Error deleting performances by developer: {ex.Message}", ex);
+            }
+  }
+    }
+}

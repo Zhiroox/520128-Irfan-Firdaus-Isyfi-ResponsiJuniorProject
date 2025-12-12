@@ -1,0 +1,47 @@
+﻿namespace Responsi2.Models
+{
+    /// <summary>
+    /// Model class untuk Developer
+    /// Mengimplementasikan Encapsulation dengan private fields dan public properties
+    /// Mewarisi dari BaseEntity (Inheritance)
+    /// </summary>
+    public class Developer : BaseEntity
+    {
+        // Private fields
+        private string? _name;
+        private string? _project;
+        private string? _contractStatus;
+
+        // Public properties dengan encapsulation
+    public string? Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+
+        public string? Project
+        {
+            get { return _project; }
+       set { _project = value; }
+   }
+
+  public string? ContractStatus
+   {
+       get { return _contractStatus; }
+      set { _contractStatus = value; }
+  }
+
+        // Validation method
+        public bool IsValid()
+    {
+       return !string.IsNullOrWhiteSpace(_name) &&
+   !string.IsNullOrWhiteSpace(_project) &&
+    !string.IsNullOrWhiteSpace(_contractStatus);
+   }
+
+        public override string ToString()
+     {
+            return $"{Name} - {Project} ({ContractStatus})";
+  }
+    }
+}

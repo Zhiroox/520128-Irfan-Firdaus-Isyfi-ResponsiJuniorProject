@@ -1,0 +1,262 @@
+﻿# ✅ PostgreSQL Connection Setup Checklist
+
+Gunakan checklist ini untuk memastikan database connection sudah benar setup.
+
+---
+
+## 📋 Pre-Setup Requirements
+
+- [ ] PostgreSQL sudah diinstall
+- [ ] pgAdmin sudah accessible (http://localhost:5050)
+- [ ] PostgreSQL service berjalan
+- [ ] Tahu PostgreSQL password
+
+---
+
+## 🔧 Setup Steps
+
+### Step 1: Create Database
+```sql
+CREATE DATABASE prodev_db;
+```
+
+**Checklist:**
+- [ ] Masuk ke pgAdmin
+- [ ] Login dengan credentials
+- [ ] Expand "Servers" → "PostgreSQL"
+- [ ] Right-click "Databases" → "Create" → "Database"
+- [ ] Ketik nama: `prodev_db`
+- [ ] Click "Save"
+
+### Step 2: Create Tables (Run Schema)
+
+**Via pgAdmin:**
+- [ ] Right-click database `prodev_db`
+- [ ] Click "Query Tool"
+- [ ] Copy-paste semua isi `Database\schema.sql`
+- [ ] Click "Execute" atau F6
+- [ ] Tunggu hingga complete (no errors)
+
+**Via Command Line:**
+```bash
+psql -U postgres -d prodev_db -f schema.sql
+```
+
+**Checklist:**
+- [ ] Schema executed successfully
+- [ ] Tables `developers` dan `performances` created
+- [ ] Indexes created
+- [ ] No error messages
+
+### Step 3: Update Configuration
+
+**File:** `appsettings.json`
+
+**Checklist:**
+- [ ] Open `appsettings.json` di text editor atau Visual Studio
+- [ ] Locate `"DefaultConnection"` string
+- [ ] Update values:
+  - [ ] `Host=localhost` (atau IP jika remote)
+  - [ ] `Port=5432` (PostgreSQL default port)
+  - [ ] `Database=prodev_db` (nama database yang dibuat)
+  - [ ] `Username=postgres` (atau username yang digunakan)
+  - [ ] `Password=YOUR_PASSWORD` → Ganti dengan password PostgreSQL kamu
+- [ ] Save file
+- [ ] No typos atau spaces di akhir
+
+**Example Result:**
+```
+"DefaultConnection": "Host=localhost;Port=5432;Database=prodev_db;Username=postgres;Password=postgres"
+```
+
+---
+
+## 🧪 Verification Steps
+
+### Verify Database Created
+```sql
+\l
+-- Atau:
+SELECT datname FROM pg_database WHERE datname = 'prodev_db';
+```
+
+**Checklist:**
+- [ ] Database `prodev_db` appears in list
+
+### Verify Tables Created
+```sql
+\d
+-- Atau:
+SELECT tablename FROM pg_tables WHERE schemaname = 'public';
+```
+
+**Checklist:**
+- [ ] Table `developers` exists
+- [ ] Table `performances` exists
+
+### Verify Schema
+```sql
+\d developers
+\d performances
+```
+
+**Checklist:**
+- [ ] `developers` table columns correct
+- [ ] `performances` table columns correct
+- [ ] Foreign key constraint exists
+- [ ] Indexes created
+
+---
+
+## 🚀 Application Test
+
+### Step 1: Build Application
+```bash
+dotnet build
+```
+
+**Checklist:**
+- [ ] Build successful (no errors)
+
+### Step 2: Run Application
+```bash
+dotnet run
+```
+
+**Checklist:**
+- [ ] Application starts
+- [ ] Form1 window appears
+
+### Step 3: Test Connection
+
+**Expected:**
+- [ ] Dialog "Koneksi database berhasil!" appears
+- [ ] Form ready untuk input
+- [ ] No error messages
+
+**If Error:**
+- [ ] Check error message
+- [ ] Verify connection string
+- [ ] Check PostgreSQL running
+- [ ] Verify password
+
+### Step 4: Test Insert Operation
+1. [ ] Fill in developer name
+2. [ ] Select project
+3. [ ] Select status
+4. [ ] Enter features & bugs
+5. [ ] Click "Insert"
+6. [ ] Row appears in DataGridView
+7. [ ] Success message shows
+
+### Step 5: Verify Data in Database
+```sql
+SELECT * FROM developers;
+SELECT * FROM performances;
+```
+
+**Checklist:**
+- [ ] Data appears in database
+- [ ] Values match what entered in form
+
+---
+
+## 🔍 Common Issues & Solutions
+
+### Issue: "Gagal terhubung ke database"
+**Checklist:**
+- [ ] PostgreSQL service running?
+  ```bash
+  # Windows:
+  services.msc
+  # Search: "PostgreSQL" or "postgres"
+  # Status should be "Running"
+  ```
+- [ ] Connection string correct?
+- [ ] Password correct?
+- [ ] Port 5432 accessible?
+- [ ] Firewall blocking?
+
+### Issue: "database 'prodev_db' does not exist"
+**Checklist:**
+- [ ] Database created?
+  ```sql
+  \l | grep prodev_db
+  ```
+- [ ] Database name spelled correctly?
+- [ ] Using correct PostgreSQL user?
+
+### Issue: "relation 'developers' does not exist"
+**Checklist:**
+- [ ] Schema.sql executed?
+- [ ] Tables created?
+  ```sql
+  \d developers
+  ```
+- [ ] Using correct database (`prodev_db`)?
+
+### Issue: "password authentication failed"
+**Checklist:**
+- [ ] PostgreSQL password correct?
+- [ ] Password updated in appsettings.json?
+- [ ] No extra spaces?
+- [ ] Special characters escaped if needed?
+
+---
+
+## 📊 Final Verification
+
+Run this SQL to verify complete setup:
+
+```sql
+-- Check database
+SELECT current_database() as current_db;
+
+-- Check tables
+SELECT tablename FROM pg_tables WHERE schemaname = 'public';
+
+-- Check developers table
+\d developers
+
+-- Check performances table
+\d performances
+
+-- Check foreign key
+SELECT constraint_name, table_name, column_name 
+FROM information_schema.constraint_column_usage 
+WHERE table_name='performances';
+
+-- Check data (should be empty if new setup)
+SELECT COUNT(*) FROM developers;
+SELECT COUNT(*) FROM performances;
+```
+
+**All should return without errors ✅**
+
+---
+
+## 🎯 Summary Checklist
+
+- [ ] PostgreSQL installed & running
+- [ ] Database `prodev_db` created
+- [ ] Tables `developers` & `performances` created
+- [ ] Indexes created
+- [ ] Connection string updated in `appsettings.json`
+- [ ] Password set correctly
+- [ ] Application builds successfully
+- [ ] Connection test successful
+- [ ] Insert/Update/Delete operations work
+- [ ] Data persists in database
+
+---
+
+## 📞 Need Help?
+
+Check these files:
+1. `QUICKSTART.md` - Fast setup (3 minutes)
+2. `DATABASE_SETUP.md` - Detailed instructions
+3. `PROJECT_DOCUMENTATION.md` - Full documentation
+
+---
+
+**Setup Complete! ✅ Ready to use PRODEV! 🚀**

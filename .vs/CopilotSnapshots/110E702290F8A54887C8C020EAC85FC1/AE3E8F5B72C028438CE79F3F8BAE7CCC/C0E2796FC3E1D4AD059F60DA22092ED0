@@ -1,0 +1,43 @@
+﻿# PRODEV - Clean Version
+
+## Database Configuration ✅
+- **Host**: localhost
+- **Port**: 5432
+- **Database**: responsi
+- **Username**: postgres
+- **Password**: informatika
+
+Connection string sudah di-update di `appsettings.json`
+
+## Project Structure
+```
+Responsi2/
+├── Models/
+│   ├── BaseEntity.cs
+│   ├── Developer.cs
+│   └── Performance.cs
+├── Services/
+│   └── DeveloperService.cs
+├── Data/
+│   ├── DatabaseConnection.cs
+│   ├── DeveloperRepository.cs
+│   └── PerformanceRepository.cs
+├── Database/
+│   └── schema.sql
+├── Form1.cs
+├── Form1.Designer.cs
+├── Form1.resx
+├── Program.cs
+├── appsettings.json
+└── Responsi2.csproj
+```
+
+## Features
+✅ Encapsulation & Inheritance (OOP)
+✅ Repository Pattern
+✅ Service Layer
+✅ Async Database Operations
+✅ CRUD Complete
+
+## Ready to Use!
+Just run `dotnet run` dan aplikasi siap digunakan dengan database.

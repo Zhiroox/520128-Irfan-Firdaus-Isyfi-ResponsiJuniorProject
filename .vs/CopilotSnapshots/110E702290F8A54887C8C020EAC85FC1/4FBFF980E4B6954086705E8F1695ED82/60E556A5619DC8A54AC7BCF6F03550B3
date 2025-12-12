@@ -1,0 +1,255 @@
+﻿using Responsi2.Services;
+using Responsi2.Models;
+
+namespace Responsi2
+{
+    public partial class Form1 : Form
+    {
+        // Service untuk mengelola business logic
+        private DeveloperService _developerService;
+
+        public Form1()
+        {
+            InitializeComponent();
+            _developerService = new DeveloperService();
+            InitializeUI();
+        }
+
+        /// <summary>
+        /// Inisialisasi UI dan event handlers
+        /// </summary>
+        private void InitializeUI()
+        {
+            // Setup combo boxes
+            SetupProjectComboBox();
+            SetupStatusComboBox();
+
+            // Event handlers
+            btn_Insert.Click += Btn_Insert_Click;
+            btn_Update.Click += Btn_Update_Click;
+            btn_Delete.Click += Btn_Delete_Click;
+
+            // Setup DataGridView
+            SetupDataGridView();
+        }
+
+        /// <summary>
+        /// Setup project combo box dengan daftar project
+        /// </summary>
+        private void SetupProjectComboBox()
+        {
+            comboBox1.Items.Clear();
+            comboBox1.Items.Add("Project A");
+            comboBox1.Items.Add("Project B");
+            comboBox1.Items.Add("Project C");
+            comboBox1.Items.Add("Project D");
+            comboBox1.SelectedIndex = 0;
+        }
+
+        /// <summary>
+        /// Setup status combo box
+        /// </summary>
+        private void SetupStatusComboBox()
+        {
+            comboBox2.Items.Clear();
+            comboBox2.Items.Add("Full-time");
+            comboBox2.Items.Add("Part-time");
+            comboBox2.Items.Add("Contract");
+            comboBox2.Items.Add("Freelance");
+            comboBox2.SelectedIndex = 0;
+        }
+
+        /// <summary>
+        /// Setup DataGridView columns
+        /// </summary>
+        private void SetupDataGridView()
+        {
+            dataGridView1.Columns.Clear();
+            dataGridView1.Columns.Add("Id", "ID");
+            dataGridView1.Columns.Add("Name", "Nama Developer");
+            dataGridView1.Columns.Add("Project", "Project");
+            dataGridView1.Columns.Add("Status", "Status");
+            dataGridView1.Columns.Add("Features", "Fitur Selesai");
+            dataGridView1.Columns.Add("Bugs", "Jumlah Bug");
+            dataGridView1.Columns.Add("Rating", "Rating");
+
+            RefreshDataGridView();
+        }
+
+        /// <summary>
+        /// Refresh data di DataGridView
+        /// </summary>
+        private void RefreshDataGridView()
+        {
+            dataGridView1.Rows.Clear();
+
+            var developers = _developerService.GetAllDevelopers();
+            foreach (var dev in developers)
+            {
+                var performance = _developerService.GetPerformanceByDeveloperId(dev.Id);
+                var features = performance?.CompletedFeatures ?? 0;
+                var bugs = performance?.BugCount ?? 0;
+                var rating = performance?.GetPerformanceRating() ?? "N/A";
+
+                dataGridView1.Rows.Add(
+                    dev.Id,
+                    dev.Name,
+                    dev.Project,
+                    dev.ContractStatus,
+                    features,
+                    bugs,
+                    rating
+                );
+            }
+        }
+
+        /// <summary>
+        /// Event handler untuk tombol Insert
+        /// </summary>
+        private void Btn_Insert_Click(object? sender, EventArgs e)
+        {
+            try
+            {
+                string name = textBox1.Text.Trim();
+                string project = comboBox1.SelectedItem?.ToString() ?? "";
+                string status = comboBox2.SelectedItem?.ToString() ?? "";
+                int features = int.TryParse(textBox2.Text, out int f) ? f : 0;
+                int bugs = int.TryParse(textBox3.Text, out int b) ? b : 0;
+
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    MessageBox.Show("Nama developer tidak boleh kosong!", "Validasi Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (_developerService.AddDeveloper(name, project, status))
+                {
+                    // Get the newly created developer
+                    var developers = _developerService.GetAllDevelopers();
+                    var newDeveloper = developers.LastOrDefault();
+
+                    if (newDeveloper != null && features > 0)
+                    {
+                        _developerService.AddPerformance(newDeveloper.Id, features, bugs);
+                    }
+
+                    MessageBox.Show("Developer berhasil ditambahkan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ClearInputFields();
+                    RefreshDataGridView();
+                }
+                else
+                {
+                    MessageBox.Show("Gagal menambahkan developer!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Event handler untuk tombol Update
+        /// </summary>
+        private void Btn_Update_Click(object? sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Pilih data yang ingin diupdate!", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                int id = (int)dataGridView1.SelectedRows[0].Cells["Id"].Value;
+                string name = textBox1.Text.Trim();
+                string project = comboBox1.SelectedItem?.ToString() ?? "";
+                string status = comboBox2.SelectedItem?.ToString() ?? "";
+                int features = int.TryParse(textBox2.Text, out int f) ? f : 0;
+                int bugs = int.TryParse(textBox3.Text, out int b) ? b : 0;
+
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    MessageBox.Show("Nama developer tidak boleh kosong!", "Validasi Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (_developerService.UpdateDeveloper(id, name, project, status))
+                {
+                    var performance = _developerService.GetPerformanceByDeveloperId(id);
+                    if (performance != null)
+                    {
+                        _developerService.UpdatePerformance(performance.Id, features, bugs);
+                    }
+                    else if (features > 0)
+                    {
+                        _developerService.AddPerformance(id, features, bugs);
+                    }
+
+                    MessageBox.Show("Developer berhasil diupdate!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ClearInputFields();
+                    RefreshDataGridView();
+                }
+                else
+                {
+                    MessageBox.Show("Gagal mengupdate developer!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Event handler untuk tombol Delete
+        /// </summary>
+        private void Btn_Delete_Click(object? sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Pilih data yang ingin dihapus!", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                int id = (int)dataGridView1.SelectedRows[0].Cells["Id"].Value;
+                var dev = _developerService.GetDeveloperById(id);
+
+                var result = MessageBox.Show($"Yakin ingin menghapus {dev?.Name}?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    if (_developerService.DeleteDeveloper(id))
+                    {
+                        MessageBox.Show("Developer berhasil dihapus!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ClearInputFields();
+                        RefreshDataGridView();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Gagal menghapus developer!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Clear semua input fields
+        /// </summary>
+        private void ClearInputFields()
+        {
+            textBox1.Clear();
+            textBox2.Clear();
+            textBox3.Clear();
+            comboBox1.SelectedIndex = 0;
+            comboBox2.SelectedIndex = 0;
+            textBox1.Focus();
+        }
+    }
+}

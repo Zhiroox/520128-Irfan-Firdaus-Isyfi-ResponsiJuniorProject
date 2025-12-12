@@ -1,0 +1,178 @@
+﻿namespace Responsi2.Data
+{
+    using Npgsql;
+  using System;
+ using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// Repository untuk Proyek - menangani semua database operations
+    /// </summary>
+    public class ProyekRepository
+    {
+      private readonly DatabaseConnection _dbConnection;
+
+        public ProyekRepository(DatabaseConnection dbConnection)
+        {
+   _dbConnection = dbConnection ?? throw new ArgumentNullException(nameof(dbConnection));
+        }
+
+        /// <summary>
+      /// Tambah proyek baru ke database
+        /// </summary>
+      public async Task<int> AddProyekAsync(string namaProyek, string client, int budget)
+        {
+          try
+         {
+         string query = @"
+     INSERT INTO proyek (nama_proyek, client, budget)
+       VALUES (@namaProyek, @client, @budget)
+             RETURNING id_proyek;
+   ";
+
+    var parameters = new[]
+        {
+ new NpgsqlParameter("@namaProyek", namaProyek),
+        new NpgsqlParameter("@client", client),
+         new NpgsqlParameter("@budget", budget)
+                };
+
+           var result = await _dbConnection.ExecuteScalarAsync(query, parameters);
+         return result != null ? Convert.ToInt32(result) : 0;
+     }
+            catch (Exception ex)
+            {
+       throw new InvalidOperationException($"Error adding proyek: {ex.Message}", ex);
+  }
+        }
+
+        /// <summary>
+   /// Update informasi proyek
+    /// </summary>
+        public async Task<bool> UpdateProyekAsync(int idProyek, string namaProyek, string client, int budget)
+  {
+     try
+          {
+          string query = @"
+                    UPDATE proyek
+       SET nama_proyek = @namaProyek,
+       client = @client,
+     budget = @budget
+        WHERE id_proyek = @idProyek;
+     ";
+
+       var parameters = new[]
+            {
+      new NpgsqlParameter("@idProyek", idProyek),
+      new NpgsqlParameter("@namaProyek", namaProyek),
+    new NpgsqlParameter("@client", client),
+      new NpgsqlParameter("@budget", budget)
+         };
+
+       int result = await _dbConnection.ExecuteAsync(query, parameters);
+           return result > 0;
+            }
+        catch (Exception ex)
+     {
+    throw new InvalidOperationException($"Error updating proyek: {ex.Message}", ex);
+     }
+ }
+
+     /// <summary>
+        /// Hapus proyek dari database
+  /// </summary>
+        public async Task<bool> DeleteProyekAsync(int idProyek)
+        {
+     try
+            {
+              string query = "DELETE FROM proyek WHERE id_proyek = @idProyek;";
+  var parameters = new[] { new NpgsqlParameter("@idProyek", idProyek) };
+
+         int result = await _dbConnection.ExecuteAsync(query, parameters);
+                return result > 0;
+         }
+         catch (Exception ex)
+    {
+        throw new InvalidOperationException($"Error deleting proyek: {ex.Message}", ex);
+  }
+        }
+
+  /// <summary>
+        /// Dapatkan semua proyek dari database
+        /// </summary>
+        public async Task<List<(int IdProyek, string NamaProyek, string Client, int Budget)>> GetAllProyekAsync()
+   {
+         var proyeks = new List<(int IdProyek, string NamaProyek, string Client, int Budget)>();
+
+       try
+     {
+     string query = "SELECT id_proyek, nama_proyek, client, budget FROM proyek ORDER BY id_proyek;";
+
+      using var reader = await _dbConnection.ExecuteReaderAsync(query);
+      while (await reader.NextResultAsync())
+                {
+                    int idProyek = reader.GetInt32(0);
+         string namaProyek = reader.GetString(1);
+          string client = reader.GetString(2);
+           int budget = reader.GetInt32(3);
+
+         proyeks.Add((idProyek, namaProyek, client, budget));
+           }
+    }
+  catch (Exception ex)
+            {
+  throw new InvalidOperationException($"Error retrieving proyeks: {ex.Message}", ex);
+    }
+
+            return proyeks;
+        }
+
+        /// <summary>
+        /// Dapatkan proyek berdasarkan ID
+        /// </summary>
+        public async Task<(int IdProyek, string NamaProyek, string Client, int Budget)?> GetProyekByIdAsync(int idProyek)
+      {
+      try
+   {
+            string query = "SELECT id_proyek, nama_proyek, client, budget FROM proyek WHERE id_proyek = @idProyek;";
+   var parameters = new[] { new NpgsqlParameter("@idProyek", idProyek) };
+
+         using var reader = await _dbConnection.ExecuteReaderAsync(query, parameters);
+         if (await reader.NextResultAsync())
+     {
+                int id = reader.GetInt32(0);
+      string namaProyek = reader.GetString(1);
+  string client = reader.GetString(2);
+        int budget = reader.GetInt32(3);
+
+      return (id, namaProyek, client, budget);
+         }
+            }
+  catch (Exception ex)
+ {
+           throw new InvalidOperationException($"Error retrieving proyek: {ex.Message}", ex);
+            }
+
+     return null;
+  }
+
+        /// <summary>
+        /// Cek apakah proyek dengan ID tertentu ada
+     /// </summary>
+        public async Task<bool> ProyekExistsAsync(int idProyek)
+        {
+            try
+    {
+        string query = "SELECT COUNT(*) FROM proyek WHERE id_proyek = @idProyek;";
+      var parameters = new[] { new NpgsqlParameter("@idProyek", idProyek) };
+
+          var result = await _dbConnection.ExecuteScalarAsync(query, parameters);
+   return result != null && Convert.ToInt32(result) > 0;
+     }
+ catch (Exception ex)
+      {
+    throw new InvalidOperationException($"Error checking proyek existence: {ex.Message}", ex);
+      }
+        }
+    }
+}

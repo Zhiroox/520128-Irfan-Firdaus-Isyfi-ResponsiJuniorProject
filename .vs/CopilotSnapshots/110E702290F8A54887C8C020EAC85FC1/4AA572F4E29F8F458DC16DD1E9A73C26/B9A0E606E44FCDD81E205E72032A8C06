@@ -1,0 +1,38 @@
+﻿-- ===================================
+-- COPY-PASTE ALL THIS TO pgAdmin Query Tool
+-- ===================================
+-- Drop existing tables if they exist
+DROP TABLE IF EXISTS developer;
+DROP TABLE IF EXISTS proyek;
+
+-- ===================================
+-- Create Proyek Table
+-- ===================================
+CREATE TABLE proyek (
+    id_proyek SERIAL PRIMARY KEY,
+    nama_proyek VARCHAR(100) NOT NULL,
+    client VARCHAR(100) NOT NULL,
+    budget INTEGER NOT NULL
+);
+
+-- Create index untuk faster queries
+CREATE INDEX idx_proyek_nama ON proyek(nama_proyek);
+
+-- ===================================
+-- Create Developer Table
+-- ===================================
+CREATE TABLE developer (
+    id_dev SERIAL PRIMARY KEY,
+    id_proyek INTEGER NOT NULL,
+    nama_dev VARCHAR(60) NOT NULL,
+    status_kontrak VARCHAR(10) NOT NULL,
+    fitur_selesai VARCHAR(60) NOT NULL,
+    jumlah_bug INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_proyek) REFERENCES proyek(id_proyek) ON DELETE CASCADE
+);
+
+-- Create index untuk faster queries
+CREATE INDEX idx_developer_nama ON developer(nama_dev);
+CREATE INDEX idx_developer_proyek ON developer(id_proyek);

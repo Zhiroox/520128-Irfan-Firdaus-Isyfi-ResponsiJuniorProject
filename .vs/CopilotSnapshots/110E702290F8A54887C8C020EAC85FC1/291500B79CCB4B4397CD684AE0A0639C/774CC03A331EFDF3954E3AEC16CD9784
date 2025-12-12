@@ -1,0 +1,133 @@
+﻿# PRODEV - Database Setup Guide
+
+## 📋 Langkah-langkah Setup PostgreSQL Connection
+
+### 1. **Create Database di PostgreSQL**
+
+```sql
+CREATE DATABASE prodev_db;
+```
+
+### 2. **Run SQL Script untuk membuat tabel**
+
+Pilih salah satu cara:
+
+#### **Cara A: Menggunakan pgAdmin**
+1. Buka pgAdmin di browser (biasanya http://localhost:5050)
+2. Login dengan credentials pgAdmin
+3. Expand "Servers" → "PostgreSQL"
+4. Right-click pada database "prodev_db" → "Query Tool"
+5. Copy-paste isi file `Database\schema.sql`
+6. Click "Execute" atau tekan F6
+
+#### **Cara B: Menggunakan Command Line**
+```bash
+psql -U postgres -d prodev_db -f schema.sql
+```
+
+Atau:
+```bash
+psql -U postgres
+\c prodev_db
+\i schema.sql
+```
+
+### 3. **Update Connection String di `appsettings.json`**
+
+File: `appsettings.json`
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Port=5432;Database=prodev_db;Username=postgres;Password=YOUR_PASSWORD"
+  }
+}
+```
+
+**Ganti bagian berikut dengan info database kamu:**
+- `Host`: Server address (default: localhost)
+- `Port`: PostgreSQL port (default: 5432)
+- `Database`: Nama database (default: prodev_db)
+- `Username`: PostgreSQL username (default: postgres)
+- `Password`: Password yang kamu set saat install PostgreSQL
+
+### 4. **Contoh Connection String yang Sudah Benar:**
+
+Jika kamu install PostgreSQL dengan settings default:
+```
+Host=localhost;Port=5432;Database=prodev_db;Username=postgres;Password=postgres
+```
+
+Jika menggunakan Remote Server:
+```
+Host=192.168.1.100;Port=5432;Database=prodev_db;Username=postgres;Password=your_secure_password
+```
+
+### 5. **Test Connection**
+
+Program akan otomatis test connection saat startup. Jika ada error, cek:
+
+- ✅ PostgreSQL service berjalan
+- ✅ Database `prodev_db` sudah dibuat
+- ✅ Connection string di `appsettings.json` benar
+- ✅ Username dan password sesuai
+- ✅ Port 5432 tidak diblokir firewall
+
+## 📊 Database Schema
+
+### **developers table**
+```
+id (SERIAL PRIMARY KEY)
+name (VARCHAR 255)
+project (VARCHAR 255)
+contract_status (VARCHAR 100)
+created_at (TIMESTAMP)
+updated_at (TIMESTAMP)
+```
+
+### **performances table**
+```
+id (SERIAL PRIMARY KEY)
+developer_id (INT - FOREIGN KEY)
+completed_features (INT)
+bug_count (INT)
+performance_score (DOUBLE PRECISION)
+created_at (TIMESTAMP)
+updated_at (TIMESTAMP)
+```
+
+## 🔧 Troubleshooting
+
+### Error: "Gagal terhubung ke database"
+- Pastikan PostgreSQL server running
+- Check connection string di appsettings.json
+- Verify username/password
+
+### Error: "relation 'developers' does not exist"
+- Run SQL script (schema.sql) untuk create tables
+- Pastikan database sudah dipilih
+
+### Error: "password authentication failed"
+- Double-check password di connection string
+- Pastikan user memiliki permission
+
+### Error: "could not connect to server: Connection refused"
+- PostgreSQL server tidak berjalan
+- Cek port (default: 5432)
+- Check firewall settings
+
+## 📝 File-file yang Perlu Diupdate
+
+1. **appsettings.json** - Update connection string dengan credentials database kamu
+2. **Database/schema.sql** - Buka dan execute di pgAdmin atau command line
+
+## 🚀 Setelah Setup Selesai
+
+Application sudah siap digunakan:
+- ✅ Form akan automatically connect saat startup
+- ✅ Data akan tersave ke PostgreSQL
+- ✅ CRUD operations (Create, Read, Update, Delete) berfungsi
+
+---
+
+**Happy Coding! 🎉**

@@ -1,0 +1,332 @@
+﻿using Responsi2.Services;
+using Responsi2.Models;
+using Responsi2.Data;
+using System;
+using System.Threading.Tasks;
+
+namespace Responsi2
+{
+    public partial class Form1 : Form
+    {
+        // Service untuk mengelola business logic
+        private DeveloperService? _developerService;
+        private DatabaseConnection? _dbConnection;
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        /// <summary>
+        /// Initialize form saat loading
+        /// </summary>
+        private async void Form1_Load(object? sender, EventArgs e)
+        {
+            try
+            {
+                // Initialize database connection
+                _dbConnection = new DatabaseConnection();
+                
+                // Test connection
+                bool connectionSuccess = await _dbConnection.TestConnectionAsync();
+                if (!connectionSuccess)
+                {
+                    MessageBox.Show("Gagal terhubung ke database!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Open connection
+                await _dbConnection.OpenConnectionAsync();
+
+                // Initialize repositories dan service
+                var developerRepo = new DeveloperRepository(_dbConnection);
+                var performanceRepo = new PerformanceRepository(_dbConnection);
+                _developerService = new DeveloperService(developerRepo, performanceRepo);
+
+                InitializeUI();
+                MessageBox.Show("Koneksi database berhasil!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saat startup: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Inisialisasi UI dan event handlers
+        /// </summary>
+        private void InitializeUI()
+        {
+            // Setup combo boxes
+            SetupProjectComboBox();
+            SetupStatusComboBox();
+
+            // Event handlers
+            btn_Insert.Click += Btn_Insert_Click;
+            btn_Update.Click += Btn_Update_Click;
+            btn_Delete.Click += Btn_Delete_Click;
+
+            // Setup DataGridView
+            SetupDataGridView();
+      
+            // Load initial data
+            _ = RefreshDataGridViewAsync();
+         }
+
+       /// <summary>
+       /// Setup project combo box dengan daftar project
+        /// </summary>
+        private void SetupProjectComboBox()
+      {
+ comboBox1.Items.Clear();
+            comboBox1.Items.Add("Project A");
+            comboBox1.Items.Add("Project B");
+            comboBox1.Items.Add("Project C");
+            comboBox1.Items.Add("Project D");
+   comboBox1.SelectedIndex = 0;
+    }
+
+ /// <summary>
+     /// Setup status combo box
+        /// </summary>
+        private void SetupStatusComboBox()
+      {
+            comboBox2.Items.Clear();
+ comboBox2.Items.Add("Full-time");
+      comboBox2.Items.Add("Part-time");
+      comboBox2.Items.Add("Contract");
+      comboBox2.Items.Add("Freelance");
+      comboBox2.SelectedIndex = 0;
+        }
+
+        /// <summary>
+        /// Setup DataGridView columns
+        /// </summary>
+        private void SetupDataGridView()
+        {
+ dataGridView1.Columns.Clear();
+    dataGridView1.Columns.Add("Id", "ID");
+            dataGridView1.Columns.Add("Name", "Nama Developer");
+       dataGridView1.Columns.Add("Project", "Project");
+            dataGridView1.Columns.Add("Status", "Status");
+            dataGridView1.Columns.Add("Features", "Fitur Selesai");
+            dataGridView1.Columns.Add("Bugs", "Jumlah Bug");
+ dataGridView1.Columns.Add("Rating", "Rating");
+        }
+
+      /// <summary>
+        /// Refresh data di DataGridView
+   /// </summary>
+        private async Task RefreshDataGridViewAsync()
+        {
+  try
+      {
+          if (_developerService == null)
+      return;
+
+                dataGridView1.Rows.Clear();
+
+var developers = await _developerService.GetAllDevelopersAsync();
+            foreach (var dev in developers)
+       {
+       var performance = await _developerService.GetPerformanceByDeveloperIdAsync(dev.Id);
+        var features = performance?.CompletedFeatures ?? 0;
+  var bugs = performance?.BugCount ?? 0;
+      var rating = performance?.GetPerformanceRating() ?? "N/A";
+
+ dataGridView1.Rows.Add(
+     dev.Id,
+              dev.Name,
+         dev.Project,
+            dev.ContractStatus,
+              features,
+     bugs,
+        rating
+            );
+         }
+      }
+            catch (Exception ex)
+            {
+   MessageBox.Show($"Error refresh data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+       }
+        }
+
+        /// <summary>
+        /// Event handler untuk tombol Insert
+    /// </summary>
+        private async void Btn_Insert_Click(object? sender, EventArgs e)
+        {
+            try
+      {
+        if (_developerService == null)
+    {
+     MessageBox.Show("Service tidak siap!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+   return;
+          }
+
+     string name = textBox1.Text.Trim();
+       string project = comboBox1.SelectedItem?.ToString() ?? "";
+        string status = comboBox2.SelectedItem?.ToString() ?? "";
+     int features = int.TryParse(textBox2.Text, out int f) ? f : 0;
+          int bugs = int.TryParse(textBox3.Text, out int b) ? b : 0;
+
+      if (string.IsNullOrWhiteSpace(name))
+         {
+             MessageBox.Show("Nama developer tidak boleh kosong!", "Validasi Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+    return;
+     }
+
+         if (await _developerService.AddDeveloperAsync(name, project, status))
+     {
+          // Get the newly created developer
+    var developers = await _developerService.GetAllDevelopersAsync();
+         var newDeveloper = developers.LastOrDefault();
+
+       if (newDeveloper != null && features > 0)
+        {
+         await _developerService.AddPerformanceAsync(newDeveloper.Id, features, bugs);
+     }
+
+   MessageBox.Show("Developer berhasil ditambahkan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+             ClearInputFields();
+  await RefreshDataGridViewAsync();
+    }
+     else
+     {
+        MessageBox.Show("Gagal menambahkan developer!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        }
+      catch (Exception ex)
+            {
+     MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+ }
+
+        /// <summary>
+     /// Event handler untuk tombol Update
+        /// </summary>
+   private async void Btn_Update_Click(object? sender, EventArgs e)
+        {
+            try
+       {
+                if (_developerService == null)
+          {
+      MessageBox.Show("Service tidak siap!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+       return;
+           }
+
+          if (dataGridView1.SelectedRows.Count == 0)
+       {
+          MessageBox.Show("Pilih data yang ingin diupdate!", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+             return;
+      }
+
+           int id = (int)dataGridView1.SelectedRows[0].Cells["Id"].Value;
+       string name = textBox1.Text.Trim();
+      string project = comboBox1.SelectedItem?.ToString() ?? "";
+    string status = comboBox2.SelectedItem?.ToString() ?? "";
+      int features = int.TryParse(textBox2.Text, out int f) ? f : 0;
+         int bugs = int.TryParse(textBox3.Text, out int b) ? b : 0;
+
+        if (string.IsNullOrWhiteSpace(name))
+           {
+      MessageBox.Show("Nama developer tidak boleh kosong!", "Validasi Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+           return;
+      }
+
+     if (await _developerService.UpdateDeveloperAsync(id, name, project, status))
+      {
+        var performance = await _developerService.GetPerformanceByDeveloperIdAsync(id);
+     if (performance != null)
+              {
+               await _developerService.UpdatePerformanceAsync(performance.Id, features, bugs);
+     }
+else if (features > 0)
+   {
+      await _developerService.AddPerformanceAsync(id, features, bugs);
+     }
+
+      MessageBox.Show("Developer berhasil diupdate!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+         ClearInputFields();
+          await RefreshDataGridViewAsync();
+      }
+         else
+    {
+      MessageBox.Show("Gagal mengupdate developer!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+     }
+   catch (Exception ex)
+            {
+         MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        }
+
+   /// <summary>
+ /// Event handler untuk tombol Delete
+        /// </summary>
+        private async void Btn_Delete_Click(object? sender, EventArgs e)
+        {
+            try
+            {
+           if (_developerService == null)
+     {
+      MessageBox.Show("Service tidak siap!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+ return;
+    }
+
+                if (dataGridView1.SelectedRows.Count == 0)
+ {
+  MessageBox.Show("Pilih data yang ingin dihapus!", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+         return;
+      }
+
+    int id = (int)dataGridView1.SelectedRows[0].Cells["Id"].Value;
+  var dev = await _developerService.GetDeveloperByIdAsync(id);
+
+      var result = MessageBox.Show($"Yakin ingin menghapus {dev?.Name}?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+    {
+  if (await _developerService.DeleteDeveloperAsync(id))
+            {
+  MessageBox.Show("Developer berhasil dihapus!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+   ClearInputFields();
+   await RefreshDataGridViewAsync();
+      }
+   else
+           {
+         MessageBox.Show("Gagal menghapus developer!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
+         }
+         }
+       catch (Exception ex)
+ {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+         }
+     }
+
+        /// <summary>
+        /// Clear semua input fields
+        /// </summary>
+        private void ClearInputFields()
+        {
+            textBox1.Clear();
+textBox2.Clear();
+            textBox3.Clear();
+            comboBox1.SelectedIndex = 0;
+       comboBox2.SelectedIndex = 0;
+            textBox1.Focus();
+        }
+
+        /// <summary>
+        /// Handle form closing
+   /// </summary>
+        private async void Form1_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            if (_dbConnection != null)
+            {
+            await _dbConnection.CloseConnectionAsync();
+            }
+        }
+    }
+}

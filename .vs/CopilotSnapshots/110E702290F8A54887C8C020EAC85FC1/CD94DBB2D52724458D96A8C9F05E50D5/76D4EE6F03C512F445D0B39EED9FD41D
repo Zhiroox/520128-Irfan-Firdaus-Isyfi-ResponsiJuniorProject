@@ -1,0 +1,194 @@
+﻿namespace Responsi2.Data
+{
+    using Npgsql;
+    using System;
+  using System.IO;
+    using System.Text.Json;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// Database connection manager untuk PostgreSQL
+    /// Menangani connection string dan database operations
+    /// </summary>
+    public class DatabaseConnection
+    {
+        private readonly string _connectionString;
+        private NpgsqlConnection? _connection;
+
+        /// <summary>
+        /// Constructor yang membaca connection string dari appsettings.json
+ /// </summary>
+        public DatabaseConnection()
+        {
+            _connectionString = GetConnectionStringFromConfig();
+        }
+
+        /// <summary>
+      /// Constructor dengan custom connection string
+        /// </summary>
+        public DatabaseConnection(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
+
+        /// <summary>
+        /// Baca connection string dari appsettings.json
+ /// </summary>
+        private string GetConnectionStringFromConfig()
+        {
+      try
+       {
+    string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+       
+                if (!File.Exists(configPath))
+      {
+      throw new FileNotFoundException($"appsettings.json tidak ditemukan di {configPath}");
+          }
+
+              string jsonContent = File.ReadAllText(configPath);
+     using JsonDocument doc = JsonDocument.Parse(jsonContent);
+     
+                string? connectionString = doc.RootElement
+   .GetProperty("ConnectionStrings")
+           .GetProperty("DefaultConnection")
+  .GetString();
+
+  if (string.IsNullOrWhiteSpace(connectionString))
+      {
+           throw new InvalidOperationException("Connection string tidak ditemukan di appsettings.json");
+            }
+
+   return connectionString;
+            }
+            catch (Exception ex)
+{
+       throw new InvalidOperationException($"Error membaca connection string: {ex.Message}", ex);
+            }
+ }
+
+        /// <summary>
+  /// Dapatkan connection string yang aktif
+        /// </summary>
+      public string ConnectionString => _connectionString;
+
+        /// <summary>
+        /// Test koneksi ke database
+        /// </summary>
+        public async Task<bool> TestConnectionAsync()
+   {
+            try
+     {
+   using var connection = new NpgsqlConnection(_connectionString);
+       await connection.OpenAsync();
+    await connection.CloseAsync();
+         return true;
+      }
+       catch (Exception ex)
+     {
+      throw new InvalidOperationException($"Gagal connect ke database: {ex.Message}", ex);
+   }
+        }
+
+        /// <summary>
+        /// Buka koneksi ke database
+        /// </summary>
+        public async Task OpenConnectionAsync()
+        {
+          try
+    {
+     _connection = new NpgsqlConnection(_connectionString);
+                await _connection.OpenAsync();
+      }
+    catch (Exception ex)
+  {
+                throw new InvalidOperationException($"Gagal membuka koneksi: {ex.Message}", ex);
+            }
+  }
+
+        /// <summary>
+  /// Tutup koneksi dari database
+        /// </summary>
+        public async Task CloseConnectionAsync()
+        {
+            if (_connection != null && _connection.State == System.Data.ConnectionState.Open)
+    {
+    await _connection.CloseAsync();
+           await _connection.DisposeAsync();
+            }
+ }
+
+        /// <summary>
+   /// Dapatkan NpgsqlConnection yang aktif
+        /// </summary>
+   public NpgsqlConnection? GetConnection() => _connection;
+
+        /// <summary>
+  /// Execute query (INSERT, UPDATE, DELETE)
+        /// </summary>
+ public async Task<int> ExecuteAsync(string query, params NpgsqlParameter[] parameters)
+        {
+            try
+      {
+    if (_connection == null || _connection.State != System.Data.ConnectionState.Open)
+         {
+ throw new InvalidOperationException("Koneksi database tidak terbuka");
+}
+
+             using var command = new NpgsqlCommand(query, _connection);
+     command.Parameters.AddRange(parameters);
+      
+                return await command.ExecuteNonQueryAsync();
+  }
+          catch (Exception ex)
+ {
+                throw new InvalidOperationException($"Error executing query: {ex.Message}", ex);
+  }
+    }
+
+        /// <summary>
+        /// Execute scalar query (SELECT COUNT, MAX, dll)
+        /// </summary>
+        public async Task<object?> ExecuteScalarAsync(string query, params NpgsqlParameter[] parameters)
+        {
+         try
+    {
+    if (_connection == null || _connection.State != System.Data.ConnectionState.Open)
+         {
+           throw new InvalidOperationException("Koneksi database tidak terbuka");
+       }
+
+     using var command = new NpgsqlCommand(query, _connection);
+          command.Parameters.AddRange(parameters);
+         
+                return await command.ExecuteScalarAsync();
+        }
+            catch (Exception ex)
+   {
+             throw new InvalidOperationException($"Error executing scalar query: {ex.Message}", ex);
+        }
+        }
+
+      /// <summary>
+      /// Execute reader query (SELECT)
+        /// </summary>
+  public async Task<NpgsqlDataReader> ExecuteReaderAsync(string query, params NpgsqlParameter[] parameters)
+    {
+            try
+     {
+   if (_connection == null || _connection.State != System.Data.ConnectionState.Open)
+            {
+         throw new InvalidOperationException("Koneksi database tidak terbuka");
+     }
+
+    var command = new NpgsqlCommand(query, _connection);
+    command.Parameters.AddRange(parameters);
+                
+     return await command.ExecuteReaderAsync();
+            }
+        catch (Exception ex)
+            {
+              throw new InvalidOperationException($"Error executing reader query: {ex.Message}", ex);
+   }
+        }
+    }
+}

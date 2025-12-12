@@ -1,0 +1,10 @@
+﻿{
+  "ConnectionStrings": {
+  "DefaultConnection": "Host=localhost;Port=5432;Database=prodev_db;Username=postgres;Password=YOUR_PASSWORD_HERE"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information"
+    }
+  }
+}

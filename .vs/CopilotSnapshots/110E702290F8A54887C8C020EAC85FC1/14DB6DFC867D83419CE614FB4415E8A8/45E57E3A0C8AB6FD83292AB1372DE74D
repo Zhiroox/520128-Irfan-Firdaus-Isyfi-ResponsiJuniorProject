@@ -1,0 +1,226 @@
+﻿namespace Responsi2.Data
+{
+    using Npgsql;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// Repository untuk Developer - menangani semua database operations
+    /// </summary>
+    public class DeveloperRepository
+    {
+        private readonly DatabaseConnection _dbConnection;
+
+        public DeveloperRepository(DatabaseConnection dbConnection)
+        {
+            _dbConnection = dbConnection ?? throw new ArgumentNullException(nameof(dbConnection));
+        }
+
+        /// <summary>
+ /// Tambah developer baru ke database
+        /// </summary>
+   public async Task<int> AddDeveloperAsync(int idProyek, string namaDev, string statusKontrak, string fiturSelesai, int jumlahBug)
+     {
+            try
+       {
+   string query = @"
+          INSERT INTO developer (id_proyek, nama_dev, status_kontrak, fitur_selesai, jumlah_bug, created_at, updated_at)
+  VALUES (@idProyek, @namaDev, @statusKontrak, @fiturSelesai, @jumlahBug, @createdAt, @updatedAt)
+           RETURNING id_dev;
+          ";
+
+ var parameters = new[]
+ {
+    new NpgsqlParameter("@idProyek", idProyek),
+        new NpgsqlParameter("@namaDev", namaDev),
+            new NpgsqlParameter("@statusKontrak", statusKontrak),
+           new NpgsqlParameter("@fiturSelesai", fiturSelesai),
+     new NpgsqlParameter("@jumlahBug", jumlahBug),
+           new NpgsqlParameter("@createdAt", DateTime.Now),
+    new NpgsqlParameter("@updatedAt", DateTime.Now)
+ };
+
+        var result = await _dbConnection.ExecuteScalarAsync(query, parameters);
+       return result != null ? Convert.ToInt32(result) : 0;
+            }
+            catch (Exception ex)
+      {
+    throw new InvalidOperationException($"Error adding developer: {ex.Message}", ex);
+      }
+        }
+
+      /// <summary>
+        /// Update informasi developer
+      /// </summary>
+     public async Task<bool> UpdateDeveloperAsync(int idDev, int idProyek, string namaDev, string statusKontrak, string fiturSelesai, int jumlahBug)
+        {
+   try
+            {
+  string query = @"
+            UPDATE developer
+     SET id_proyek = @idProyek,
+  nama_dev = @namaDev,
+        status_kontrak = @statusKontrak,
+        fitur_selesai = @fiturSelesai,
+  jumlah_bug = @jumlahBug,
+    updated_at = @updatedAt
+     WHERE id_dev = @idDev;
+      ";
+
+       var parameters = new[]
+           {
+     new NpgsqlParameter("@idDev", idDev),
+       new NpgsqlParameter("@idProyek", idProyek),
+  new NpgsqlParameter("@namaDev", namaDev),
+          new NpgsqlParameter("@statusKontrak", statusKontrak),
+        new NpgsqlParameter("@fiturSelesai", fiturSelesai),
+        new NpgsqlParameter("@jumlahBug", jumlahBug),
+         new NpgsqlParameter("@updatedAt", DateTime.Now)
+            };
+
+                int result = await _dbConnection.ExecuteAsync(query, parameters);
+    return result > 0;
+            }
+catch (Exception ex)
+   {
+         throw new InvalidOperationException($"Error updating developer: {ex.Message}", ex);
+    }
+        }
+
+  /// <summary>
+        /// Hapus developer dari database
+   /// </summary>
+     public async Task<bool> DeleteDeveloperAsync(int idDev)
+    {
+     try
+   {
+    string query = "DELETE FROM developer WHERE id_dev = @idDev;";
+   var parameters = new[] { new NpgsqlParameter("@idDev", idDev) };
+
+     int result = await _dbConnection.ExecuteAsync(query, parameters);
+        return result > 0;
+            }
+catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Error deleting developer: {ex.Message}", ex);
+            }
+        }
+
+    /// <summary>
+        /// Dapatkan semua developer dari database
+        /// </summary>
+        public async Task<List<(int IdDev, int IdProyek, string NamaDev, string StatusKontrak, string FiturSelesai, int JumlahBug)>> GetAllDevelopersAsync()
+        {
+     var developers = new List<(int IdDev, int IdProyek, string NamaDev, string StatusKontrak, string FiturSelesai, int JumlahBug)>();
+
+            try
+       {
+       string query = "SELECT id_dev, id_proyek, nama_dev, status_kontrak, fitur_selesai, jumlah_bug FROM developer ORDER BY id_dev;";
+
+                using var reader = await _dbConnection.ExecuteReaderAsync(query);
+          while (await reader.NextResultAsync())
+              {
+        int idDev = reader.GetInt32(0);
+         int idProyek = reader.GetInt32(1);
+     string namaDev = reader.GetString(2);
+        string statusKontrak = reader.GetString(3);
+    string fiturSelesai = reader.GetString(4);
+       int jumlahBug = reader.GetInt32(5);
+
+      developers.Add((idDev, idProyek, namaDev, statusKontrak, fiturSelesai, jumlahBug));
+     }
+    }
+catch (Exception ex)
+            {
+  throw new InvalidOperationException($"Error retrieving developers: {ex.Message}", ex);
+          }
+
+    return developers;
+      }
+
+        /// <summary>
+        /// Dapatkan developer berdasarkan ID
+      /// </summary>
+        public async Task<(int IdDev, int IdProyek, string NamaDev, string StatusKontrak, string FiturSelesai, int JumlahBug)?> GetDeveloperByIdAsync(int idDev)
+        {
+try
+          {
+           string query = "SELECT id_dev, id_proyek, nama_dev, status_kontrak, fitur_selesai, jumlah_bug FROM developer WHERE id_dev = @idDev;";
+          var parameters = new[] { new NpgsqlParameter("@idDev", idDev) };
+
+       using var reader = await _dbConnection.ExecuteReaderAsync(query, parameters);
+         if (await reader.NextResultAsync())
+           {
+             int id = reader.GetInt32(0);
+         int idProyek = reader.GetInt32(1);
+            string namaDev = reader.GetString(2);
+          string statusKontrak = reader.GetString(3);
+     string fiturSelesai = reader.GetString(4);
+               int jumlahBug = reader.GetInt32(5);
+
+   return (id, idProyek, namaDev, statusKontrak, fiturSelesai, jumlahBug);
+      }
+   }
+            catch (Exception ex)
+            {
+          throw new InvalidOperationException($"Error retrieving developer: {ex.Message}", ex);
+            }
+
+      return null;
+        }
+
+        /// <summary>
+        /// Cek apakah developer dengan ID tertentu ada
+     /// </summary>
+        public async Task<bool> DeveloperExistsAsync(int idDev)
+   {
+            try
+          {
+ string query = "SELECT COUNT(*) FROM developer WHERE id_dev = @idDev;";
+                var parameters = new[] { new NpgsqlParameter("@idDev", idDev) };
+
+  var result = await _dbConnection.ExecuteScalarAsync(query, parameters);
+                return result != null && Convert.ToInt32(result) > 0;
+          }
+    catch (Exception ex)
+    {
+                throw new InvalidOperationException($"Error checking developer existence: {ex.Message}", ex);
+    }
+   }
+
+        /// <summary>
+        /// Dapatkan semua developer untuk proyek tertentu
+        /// </summary>
+  public async Task<List<(int IdDev, int IdProyek, string NamaDev, string StatusKontrak, string FiturSelesai, int JumlahBug)>> GetDevelopersByProyekAsync(int idProyek)
+{
+        var developers = new List<(int IdDev, int IdProyek, string NamaDev, string StatusKontrak, string FiturSelesai, int JumlahBug)>();
+
+            try
+         {
+        string query = "SELECT id_dev, id_proyek, nama_dev, status_kontrak, fitur_selesai, jumlah_bug FROM developer WHERE id_proyek = @idProyek ORDER BY id_dev;";
+   var parameters = new[] { new NpgsqlParameter("@idProyek", idProyek) };
+
+           using var reader = await _dbConnection.ExecuteReaderAsync(query, parameters);
+        while (await reader.NextResultAsync())
+       {
+        int idDev = reader.GetInt32(0);
+ int idProyek2 = reader.GetInt32(1);
+     string namaDev = reader.GetString(2);
+          string statusKontrak = reader.GetString(3);
+         string fiturSelesai = reader.GetString(4);
+      int jumlahBug = reader.GetInt32(5);
+
+developers.Add((idDev, idProyek2, namaDev, statusKontrak, fiturSelesai, jumlahBug));
+        }
+            }
+            catch (Exception ex)
+    {
+        throw new InvalidOperationException($"Error retrieving developers by proyek: {ex.Message}", ex);
+            }
+
+            return developers;
+        }
+    }
+}

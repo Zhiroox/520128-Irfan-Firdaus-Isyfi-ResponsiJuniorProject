@@ -1,0 +1,116 @@
+﻿namespace Responsi2.Configuration
+{
+    using System;
+    using System.IO;
+ using System.Text.Json;
+    using System.Text.Json.Serialization;
+
+    /// <summary>
+    /// Helper class untuk manage database configuration
+    /// </summary>
+    public class DatabaseConfigHelper
+    {
+        private readonly string _configPath;
+
+ public DatabaseConfigHelper()
+        {
+          _configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+        }
+
+        /// <summary>
+        /// Dapatkan connection string saat ini
+        /// </summary>
+   public string GetConnectionString()
+    {
+     try
+         {
+        if (!File.Exists(_configPath))
+      return string.Empty;
+
+        string jsonContent = File.ReadAllText(_configPath);
+                using JsonDocument doc = JsonDocument.Parse(jsonContent);
+
+   return doc.RootElement
+      .GetProperty("ConnectionStrings")
+                    .GetProperty("DefaultConnection")
+       .GetString() ?? string.Empty;
+          }
+      catch
+            {
+         return string.Empty;
+     }
+     }
+
+        /// <summary>
+      /// Update connection string
+  /// </summary>
+        public bool UpdateConnectionString(string host, int port, string database, string username, string password)
+      {
+          try
+   {
+                string connectionString = $"Host={host};Port={port};Database={database};Username={username};Password={password}";
+       return UpdateConnectionString(connectionString);
+            }
+    catch
+     {
+         return false;
+        }
+ }
+
+        /// <summary>
+        /// Update connection string langsung
+    /// </summary>
+        public bool UpdateConnectionString(string newConnectionString)
+        {
+  try
+        {
+    string jsonContent = File.ReadAllText(_configPath);
+         var doc = JsonDocument.Parse(jsonContent);
+      var options = new JsonSerializerOptions { WriteIndented = true };
+
+    // Create new JSON object
+          var json = JsonSerializer.Deserialize<JsonElement>(jsonContent);
+   var root = new
+    {
+  ConnectionStrings = new { DefaultConnection = newConnectionString },
+   Logging = json.GetProperty("Logging")
+                };
+
+          string updatedJson = JsonSerializer.Serialize(root, options);
+     File.WriteAllText(_configPath, updatedJson);
+
+     return true;
+     }
+   catch
+ {
+      return false;
+   }
+        }
+
+        /// <summary>
+        /// Parse connection string components
+        /// </summary>
+        public (string Host, int Port, string Database, string Username) ParseConnectionString(string connectionString)
+        {
+  string host = "localhost";
+            int port = 5432;
+        string database = "";
+ string username = "";
+
+     var parts = connectionString.Split(';');
+     foreach (var part in parts)
+{
+                if (part.StartsWith("Host="))
+        host = part.Substring(5);
+         else if (part.StartsWith("Port="))
+      int.TryParse(part.Substring(5), out port);
+      else if (part.StartsWith("Database="))
+    database = part.Substring(9);
+    else if (part.StartsWith("Username="))
+username = part.Substring(9);
+            }
+
+    return (host, port, database, username);
+        }
+    }
+}

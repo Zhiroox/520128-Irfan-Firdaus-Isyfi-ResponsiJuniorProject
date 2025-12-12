@@ -1,0 +1,153 @@
+﻿namespace Responsi2.Services
+{
+    using Models;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    /// <summary>
+    /// Service class untuk menangani business logic
+    /// Memisahkan concern antara UI (Form) dan business logic
+    /// </summary>
+    public class DeveloperService
+    {
+      private List<Developer> _developers = new();
+        private List<Performance> _performances = new();
+        private int _nextDeveloperId = 1;
+        private int _nextPerformanceId = 1;
+
+        /// <summary>
+      /// Menambah developer baru
+     /// </summary>
+    public bool AddDeveloper(string name, string project, string contractStatus)
+        {
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(project) || string.IsNullOrWhiteSpace(contractStatus))
+            {
+                return false;
+      }
+
+ var developer = new Developer
+  {
+          Id = _nextDeveloperId++,
+         Name = name,
+     Project = project,
+        ContractStatus = contractStatus
+      };
+
+            _developers.Add(developer);
+          return true;
+        }
+
+        /// <summary>
+   /// Update informasi developer
+        /// </summary>
+  public bool UpdateDeveloper(int id, string name, string project, string contractStatus)
+        {
+            var developer = _developers.FirstOrDefault(d => d.Id == id);
+            if (developer == null)
+      return false;
+
+  developer.Name = name;
+developer.Project = project;
+            developer.ContractStatus = contractStatus;
+            developer.Update();
+            return true;
+        }
+
+        /// <summary>
+  /// Hapus developer dari daftar
+        /// </summary>
+    public bool DeleteDeveloper(int id)
+        {
+     var developer = _developers.FirstOrDefault(d => d.Id == id);
+            if (developer == null)
+             return false;
+
+        _developers.Remove(developer);
+   // Hapus performance data yang terkait
+            _performances.RemoveAll(p => p.DeveloperId == id);
+            return true;
+        }
+
+    /// <summary>
+        /// Dapatkan semua developer
+        /// </summary>
+        public List<Developer> GetAllDevelopers()
+  {
+            return _developers.OrderBy(d => d.Id).ToList();
+   }
+
+        /// <summary>
+        /// Dapatkan developer berdasarkan ID
+        /// </summary>
+        public Developer? GetDeveloperById(int id)
+   {
+ return _developers.FirstOrDefault(d => d.Id == id);
+        }
+
+    /// <summary>
+    /// Tambah performance data
+        /// </summary>
+        public bool AddPerformance(int developerId, int completedFeatures, int bugCount)
+    {
+    if (!_developers.Any(d => d.Id == developerId))
+      return false;
+
+       var performance = new Performance
+     {
+    Id = _nextPerformanceId++,
+      DeveloperId = developerId,
+      CompletedFeatures = completedFeatures,
+                BugCount = bugCount,
+     PerformanceScore = 0
+       };
+
+       // Hitung performance score
+            performance.PerformanceScore = performance.GetQualityScore();
+   _performances.Add(performance);
+            return true;
+        }
+
+     /// <summary>
+   /// Update performance data
+        /// </summary>
+        public bool UpdatePerformance(int id, int completedFeatures, int bugCount)
+    {
+    var performance = _performances.FirstOrDefault(p => p.Id == id);
+ if (performance == null)
+      return false;
+
+       performance.CompletedFeatures = completedFeatures;
+            performance.BugCount = bugCount;
+          performance.PerformanceScore = performance.GetQualityScore();
+    performance.Update();
+      return true;
+        }
+
+        /// <summary>
+        /// Dapatkan performance data
+   /// </summary>
+ public List<Performance> GetAllPerformances()
+{
+ return _performances.OrderBy(p => p.Id).ToList();
+        }
+
+        /// <summary>
+      /// Dapatkan performance data untuk developer tertentu
+        /// </summary>
+  public Performance? GetPerformanceByDeveloperId(int developerId)
+        {
+         return _performances.FirstOrDefault(p => p.DeveloperId == developerId);
+        }
+
+        /// <summary>
+        /// Clear all data (untuk testing/reset)
+        /// </summary>
+   public void ClearAllData()
+     {
+          _developers.Clear();
+            _performances.Clear();
+_nextDeveloperId = 1;
+        _nextPerformanceId = 1;
+        }
+    }
+}
